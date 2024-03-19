@@ -10,6 +10,7 @@
     justify-content: start;
     align-items: center;
     flex-direction: column;
+    background-color: rgba(160, 159, 155, 0.5);
 }
 
 #google-c{
@@ -88,4 +89,81 @@
 
 .episode-desc{
     font-family: 'Montserrat', sans-serif;
+}
+
+h1 {
+    color: white;
+    background-color: rgba(160, 159, 155, 0.8);
+    font-size: 5vw;
+    text-shadow: 3px 3px rgb(247, 227, 98);
+    font-family: "Varela Round", "Lucida Console", Arial, sans-serif;
+    position: absolute;
+    top: 4%;
+    left: 33%;
+}
+
+h2 {
+    color: rgb(247, 227, 98);
+    background-color: rgba(59, 58, 56, 0.8);
+    font-size: 2vw;
+    text-shadow: 1px 1px white;
+    font-family: "Varela Round", "Lucida Console", Arial, sans-serif;
+    padding-left: 15px;
+    padding-top: 15px;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-bottom: 15px;
+}
+
+.highlight {
+    font-weight: bold;
+    font-style: italic;
+    text-shadow: 3px 3px white;
+    color: rgb(247, 227, 98);
+    letter-spacing: 15px;
+  }
+
+.end {
+    letter-spacing: 10px;
+}
+
+.parallax {
+    background-image: url("images/bckgrnd.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 30vh;
+    position: relative;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+.input-form {
+    background-color: white;
+    padding-left: 15px;
+    padding-top: 2px;
+    padding-bottom: 15px;
+    margin-top: 0;
+    font-family: "Arial Rounded MT Bold", Arial, sans-serif;
+}
+
+input[value="Submit"] {
+    background-color: #c0b736; 
+    border: none; 
+    box-shadow: 0 8px 16px 0 rgba(59, 58, 56, 0.8), 0 6px 20px 0 rgba(59, 58, 56, 0.8);
+    color: white; 
+    text-shadow: -1px 0 rgba(31, 31, 30, 0.8), 0 1px rgba(31, 31, 30, 0.8), 1px 0 rgba(31, 31, 30, 0.8), 0 -1px rgba(31, 31, 30, 0.8);
+    font-family: "Varela Round", "Lucida Console", Arial, sans-serif;
+    padding: 5px 5px; 
+    text-align: center; 
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s; 
+}
+
+input[value="Submit"]:hover {
+    background-color: #726d22;
+    text-shadow: none; 
+    box-shadow: none;
 }

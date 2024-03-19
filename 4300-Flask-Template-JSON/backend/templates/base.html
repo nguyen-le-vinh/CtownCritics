@@ -1,5 +1,8 @@
 <!doctype html>
 <title>{% block title %}{% endblock %} - Flaskr</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -9,8 +12,9 @@
         <div class="top-text">
             <div class="placeholder">
                 <div class="title-section">
-                    <h1 id="app-name">CTown Critics</h1>
-                    <h2>Search for a CTown or On-Campus Dining Recommendation</h2>
+                    <div class="parallax"></div>
+                    <h1 id="app-name"><span class="highlight">C</span>Town <span class="highlight">C</span>ritic<span class="end">s</span></h1>
+                    <h2>Search for a CTown or On-Campus Dining Recommendatio<span class="end">n</span></h2>
                 </div>
                 <div class="input-form">
                     <h3 id="form-header">Preferred Location?</h3>
