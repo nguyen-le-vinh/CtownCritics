@@ -7,15 +7,37 @@
 <body>
     <div class="full-body-container">
         <div class="top-text">
-            <div class="google-colors">
-                <h1 id="google-4">4</h1>
-                <h1 id="google-3">3</h1>
-                <h1 id="google-0-1">0</h1>
-                <h1 id="google-0-2">0</h1>
-            </div>
-            <div class="input-box" onclick="sendFocus()">
-                <img src="{{ url_for('static', filename='images/mag.png') }}" />
-                <input placeholder="Search for a Keeping up with the Kardashians episode" id="filter-text-val" onkeyup="filterText()">
+            <div class="placeholder">
+                <div class="title-section">
+                    <h1 id="app-name">CTown Critics</h1>
+                    <h2>Search for a CTown or On-Campus Dining Recommendation</h2>
+                </div>
+                <div class="input-form">
+                    <h3 id="form-header">Preferred Location?</h3>
+                    <input type="radio" value="CTown" name="loc-preference" id="loc-ctown">
+                    <label for="CTown">CTown</label>
+                    <input type="radio" value="On Campus" name="loc-preference" id="loc-campus">
+                    <label for="On Campus">On Campus</label>
+                    <input type="radio" value="No Preference" name="loc-preference" id="loc-none">
+                    <label for="No Preference">No Preference</label><br><br>
+
+                    <h3 id="form-header">Preferred Price Point(s)?</h3>
+                    <input type="checkbox" value="Low" name="price-preference" id="price-low">
+                    <label for="Low">Low</label>
+                    <input type="checkbox" value="Medium" name="price-preference" id="price-med">
+                    <label for="Medium">Medium</label>
+                    <input type="checkbox" value="High" name="price-preference" id="price-high">
+                    <label for="High">High</label><br><br>
+
+                    <h3 id="form-header">Type of Food?</h3>
+                    <input type="text" placeholder="ex: Indian" name="food-preference" id="pref-food"><br><br>
+
+                    <h3 id="form-header">Key Qualities?</h3>
+                    <input type="text" placeholder="ex: good value, decent service, etc." name="quality-preference" id="pref-quality"><br><br>
+                    
+                    <input type="button" value="Submit" id="submission-button" onclick="filterText()">
+                    
+                </div>
             </div>
         </div>
         <div id="answer-box">
@@ -25,30 +47,29 @@
 
     <script>
 
-        function answerBoxTemplate(title,titleDesc,rating){
+        function answerBoxTemplate(name, reviews, rating){
             return `<div class=''>
-                <h3 class='episode-title'>${title}</h3>
-                <p class='episode-desc'>${titleDesc}</p>
-                <p class='episode-rating'>IMDB Rating: ${rating}</p>
+                <h3 class='restaurant-name'>${name}</h3>
+                <p class='restaurant-reviews'>${reviews.toString()}</p>
+                <p class='restaurant-rating'>Overall Rating: ${rating}</p>
             </div>`
-        }
-
-        function sendFocus(){
-            document.getElementById('filter-text-val').focus()
         }
 
         function filterText(){
             document.getElementById("answer-box").innerHTML = ""
-            console.log(document.getElementById("filter-text-val").value)
-            fetch("/episodes?" + new URLSearchParams({ title: document.getElementById("filter-text-val").value }).toString())
+
+            let fetch_res = fetch("/restaurants?" + new URLSearchParams({ 
+                locPreference: document.querySelector('input[name="loc-preference"]:checked').value,
+                pricePreference: document.querySelector('input[name="price-preference"]:checked').value,
+                foodPreference: document.getElementById("pref-food").value,
+                qualityPreference: document.getElementById("pref-quality").value,
+            }).toString())
             .then((response) => response.json())
-            .then((data) => data.forEach(row => {
-                
+            .then((data) => data.results.forEach(row => {
                 let tempDiv = document.createElement("div")
-                tempDiv.innerHTML = answerBoxTemplate(row.title,row.descr,row.imdb_rating)
+                tempDiv.innerHTML = answerBoxTemplate(row.name, row.reviews, row.rating)
                 document.getElementById("answer-box").appendChild(tempDiv)
             }));
-
         }
             
     </script>
