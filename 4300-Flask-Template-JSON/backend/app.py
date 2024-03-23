@@ -8,6 +8,7 @@ import string
 import math
 import re
 import numpy as np
+import math
 
 # ROOT_PATH for linking with all your files. 
 # Feel free to use a config.py or settings.py with a global export variable
@@ -57,6 +58,14 @@ for elem in word_counts:
         good_types.add(elem)'''
 
 #Angela similarity method
+
+
+'''
+#open and read data from file
+file = open('init.json')
+data = json.load(file)
+file.close()
+'''
 
 #initialize variables that will be useful later
 #word to number
