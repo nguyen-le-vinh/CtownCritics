@@ -6,6 +6,7 @@ from helpers.MySQLDatabaseHandler import MySQLDatabaseHandler
 import pandas as pd
 import re
 import numpy as np
+import math
 
 # ROOT_PATH for linking with all your files. 
 # Feel free to use a config.py or settings.py with a global export variable
@@ -80,8 +81,9 @@ def json_search(locPreference, pricePreference, foodPreference, qualityPreferenc
 
 #Angela similarity method
 
+'''
 #open and read data from file
-file = open('4300_dataset.json')
+file = open('init.json')
 data = json.load(file)
 file.close()
 
@@ -226,7 +228,7 @@ def ranks(query):
     return sorted(results, key=lambda x : x -[0])
 
 #end of angela similarity method
-
+'''
 @app.route("/")
 def home():
     return render_template('base.html',title="sample html")
