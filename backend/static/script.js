@@ -55,6 +55,7 @@ function filterText() {
             <h3 class='restaurant-name'>No results available</h3>
            
         </div>`);
+          return;
         }
         data.results.forEach((row) => {
           const tempDiv = document.createElement("div");
