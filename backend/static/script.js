@@ -7,8 +7,8 @@ function answerBoxTemplate(name, reviews, rating) {
 }
 
 function errorMessage() {
-  return `<div class='d-class'>
-            <h3 class='restaurant-name'>An error occurred</h3>
+  document.getElementById("answer-box").innerHTML = `<div class='d-class'>
+            <h3 class='error'>No results available</h3>
          
         </div>`;
 }
@@ -47,12 +47,15 @@ function filterText() {
         }
         return response.json();
       })
-      .catch(
-        (err) =>
-          (document.getElementById("d-class").innerHTML =
-            "An error occurred. Please try again later.")
-      )
+      .catch((err) => errorMessage())
       .then((data) => {
+        if (data.results.length == 0) {
+          document.getElementById("answer-box")
+            .appendChild(`<div class='d-class'>
+            <h3 class='restaurant-name'>No results available</h3>
+           
+        </div>`);
+        }
         data.results.forEach((row) => {
           const tempDiv = document.createElement("div");
           tempDiv.innerHTML = answerBoxTemplate(
@@ -64,8 +67,7 @@ function filterText() {
         });
       })
       .catch((e) => {
-        document.getElementById("d-class").innerHTML =
-          "An error occurred. Please try again later.";
+        errorMessage();
       });
   } else {
     tempDiv.innerHTML = errorMessage();

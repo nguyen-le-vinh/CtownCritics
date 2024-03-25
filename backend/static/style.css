@@ -83,6 +83,11 @@
   margin-top: 50px;
 }
 
+input[type="radio"],
+input[type="checkbox"] {
+  cursor: pointer;
+}
+
 .episode-title {
   font-family: "Kanit", sans-serif;
 }
@@ -204,4 +209,10 @@ input[value="Submit"]:hover {
   font-size: 18px;
   font-weight: bold;
   font-family: "Montserrat", sans-serif;
+}
+
+.error {
+  text-align: center;
+  color: #f4b400;
+  font-style: italic;
 }
