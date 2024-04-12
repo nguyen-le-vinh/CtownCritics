@@ -215,6 +215,7 @@ def ranks(query):
 app = Flask(__name__)
 CORS(app)
 
+
 # Sample search using json with pandas
 def json_search(locPreference, pricePreference, foodPreference, qualityPreference, restaurantPreference):
     # change later once more info has been added to json
