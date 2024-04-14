@@ -51,6 +51,7 @@ function filterText() {
       .catch((err) => errorMessage())
       .then((data) => {
         if (data.results.length == 0) {
+          h1.textContent = "Result(s)";
           document.getElementById("answer-box")
             .appendChild(`<div class='d-class'>
             <h3 class='restaurant-name'>No results available</h3>
@@ -58,13 +59,22 @@ function filterText() {
         </div>`);
           return;
         }
+
+        const h1Element = document.createElement("h1");
+        h1Element.textContent = "Result(s)";
+        h1Element.classList.add("result");
+        document.getElementById("answer-box").appendChild(h1Element);
+
         data.results.forEach((row) => {
           const tempDiv = document.createElement("div");
+        
+
           tempDiv.innerHTML = answerBoxTemplate(
             row.name,
             row.reviews,
             row.rating
           );
+
           document.getElementById("answer-box").appendChild(tempDiv);
         });
       })
@@ -99,3 +109,45 @@ document.getElementById("submission-button").addEventListener("click", (e) => {
     radioButton.checked = false;
   });
 });
+function showAllergyInputs() {
+  var allergySelect = document.getElementById("allergy");
+  var allergyInputs = document.getElementById("allergyInputs");
+  var allergyTextboxes = document.getElementById("allergyTextboxes");
+
+  if (allergySelect.value === "yes") {
+    allergyInputs.style.display = "block";
+    allergyTextboxes.innerHTML = "";
+
+    var numAllergies = document.getElementById("numAllergies").value;
+    for (var i = 0; i < numAllergies; i++) {
+      var input = document.createElement("input");
+      input.type = "text";
+      input.name = "allergy" + (i + 1);
+      input.placeholder = "Enter allergy " + (i + 1);
+      allergyTextboxes.appendChild(input);
+    }
+    let x = document
+      .getElementById("numAllergies")
+      .addEventListener("input", function () {
+        var newNumAllergies = Math.min(5, parseInt(this.value));
+        var currentNumAllergies = allergyTextboxes.children.length;
+
+        if (newNumAllergies > currentNumAllergies) {
+          for (var i = currentNumAllergies; i < newNumAllergies; i++) {
+            var input = document.createElement("input");
+            input.type = "text";
+            input.name = "allergy" + (i + 1);
+            input.placeholder = "Enter allergy " + (i + 1);
+            allergyTextboxes.appendChild(input);
+          }
+        } else if (newNumAllergies < currentNumAllergies) {
+          for (var i = currentNumAllergies - 1; i >= newNumAllergies; i--) {
+            allergyTextboxes.removeChild(allergyTextboxes.children[i]);
+          }
+        }
+      });
+  } else {
+    allergyInputs.style.display = "none";
+    allergyTextboxes.innerHTML = "";
+  }
+}

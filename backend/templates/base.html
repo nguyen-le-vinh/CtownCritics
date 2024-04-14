@@ -2,12 +2,17 @@
 <title>{% block title %}{% endblock %} - Flaskr</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet" />
+<link
+  href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap"
+  rel="stylesheet"
+/>
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Kanit&family=Montserrat&family=Open+Sans:wght@500&display=swap"
-  rel="stylesheet" />
+<link
+  href="https://fonts.googleapis.com/css2?family=Kanit&family=Montserrat&family=Open+Sans:wght@500&display=swap"
+  rel="stylesheet"
+/>
 <script src=" {{ url_for('static', filename='script.js') }}" defer></script>
 
 <body>
@@ -21,52 +26,176 @@
             <span class="highlight">C</span>ritic<span class="end">s</span>
           </h1>
           <h2>
-            Search for a CTown or On-Campus Dining Recommendatio<span class="end">n</span>
+            Search for a CTown or On-Campus Dining Recommendatio<span
+              class="end"
+              >n</span
+            >
           </h2>
         </div>
         <div class="input-form">
-          <h3 id="form-header">Preferred Location?</h3>
-          <input type="radio" value="CTown" class="radio-label" name="loc-preference" id="loc-ctown" />
-          <label for="CTown">CTown</label>
-          <input type="radio" class="radio-label" value="On Campus" name="loc-preference" id="loc-campus" />
-          <label for="On Campus">On Campus</label>
-          <input type="radio" value="No Preference" class="radio-label" name="loc-preference" id="loc-none" />
-          <label for="No Preference">No Preference</label><br /><br />
+          <div class="location-container">
+            <h3 id="form-header">Choose your preferred location?</h3>
+            <input
+              type="radio"
+              value="CTown"
+              class="radio-label"
+              name="loc-preference"
+              id="loc-ctown"
+            />
+            <label for="CTown">CTown</label>
+            <input
+              type="radio"
+              class="radio-label"
+              value="On Campus"
+              name="loc-preference"
+              id="loc-campus"
+            />
+            <label for="On Campus">On Campus</label>
+            <input
+              type="radio"
+              value="No Preference"
+              class="radio-label"
+              name="loc-preference"
+              id="loc-none"
+            />
+            <label for="No Preference">No Preference</label>
+          </div>
+          <div class="price-container">
+            <h3 id="form-header">Choose your preferred price point(s)?</h3>
+            <input
+              type="checkbox"
+              value="Low"
+              name="price-preference"
+              id="price-low"
+            />
+            <label for="Low">Low</label>
+            <input
+              type="checkbox"
+              value="Medium"
+              name="price-preference"
+              id="price-med"
+            />
+            <label for="Medium">Medium</label>
+            <input
+              type="checkbox"
+              value="High"
+              name="price-preference"
+              id="price-high"
+            />
+            <label for="High">High</label>
+          </div>
+          <div class="dietary-container">
+            <h3 id="form-header">Choose your dietary restrictions?</h3>
+            <div class="checkbox-grid">
+              <div>
+                <input
+                  type="checkbox"
+                  value="Lactose intolerance"
+                  name="price-preference"
+                  id="lactose"
+                />
 
-          <h3 id="form-header">Preferred Price Point(s)?</h3>
-          <input type="checkbox" value="Low" name="price-preference" id="price-low" />
-          <label for="Low">Low</label>
-          <input type="checkbox" value="Medium" name="price-preference" id="price-med" />
-          <label for="Medium">Medium</label>
-          <input type="checkbox" value="High" name="price-preference" id="price-high" />
-          <label for="High">High</label><br /><br />
+                <label for="Lactose intolerance">Lactose intolerance</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  value="Gluten intolerance"
+                  name="price-preference"
+                  id="gluten"
+                />
 
-          <h3 id="form-header">Dietary Restrictions?</h3>
-          <input type="checkbox" value="Lactose intolerance" name="price-preference" id="lactose" />
-          <label for="Lactose intolerance">Lactose intolerance</label>
-          <input type="checkbox" value="Gluten intolerance" name="price-preference" id="gluten" />
-          <label for="Gluten intolerance">Gluten intolerance</label>
-          <input type="checkbox" value="Vegetarian" name="price-preference" id="vegetarian" />
-          <label for="Vegetarian">Vegetarian</label><br /><br />
-          <input type="checkbox" value="Vegan" name="price-preference" id="vegan" />
-          <label for="Vegan">Vegan</label><br /><br />
-          <input type="checkbox" value="Vegetarian" name="price-preference" id="vegetarian" />
-          <label for="Vegetarian">Vegetarian</label><br /><br />
-          <input type="checkbox" value="Allergies" name="price-preference" id="Allergies" />
-          <label for="Allergies">Allergies</label><br /><br />
+                <label for="Gluten intolerance">Gluten intolerance</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  value="Vegetarian"
+                  name="price-preference"
+                  id="vegetarian"
+                />
 
-          <h3 id="form-header">Type of Food?</h3>
-          <input type="text" placeholder="ex: Indian" name="food-preference" id="pref-food" /><br /><br />
+                <label for="Vegetarian">Vegetarian</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  value="Vegan"
+                  name="price-preference"
+                  id="vegan"
+                />
 
-          <h3 id="form-header">Key Qualities?</h3>
-          <input type="text" placeholder="ex: good value, decent service, etc." name="quality-preference"
-            id="pref-quality" /><br /><br />
+                <label for="Vegan">Vegan</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  value="Vegetarian"
+                  name="price-preference"
+                  id="vegetarian"
+                />
 
-          <h3 id="form-header">Other Restaurants You Like </h3>
-          <input type="text" placeholder="ex: Sangnam Indian Cuisine, Four Seasons, etc." name="restaurant-preference"
-            id="pref-restaurant" /><br /><br />
+                <label for="Vegetarian">Vegetarian</label>
+              </div>
+            </div>
+          </div>
+          <div class="food-container">
+            <h3 id="form-header">What type of food do you want</h3>
+            <input
+              type="text"
+              placeholder="ex: Indian"
+              name="food-preference"
+              id="pref-food"
+            />
+            <div class="container">
+              <form id="allergyForm">
+                <label for="allergy">Do you have any food allergies?</label>
+                <select id="allergy" onchange="showAllergyInputs()">
+                  <option value="no">No</option>
+                  <option value="yes">Yes</option>
+                </select>
 
-          <input type="button" value="Submit" id="submission-button" />
+                <div id="allergyInputs" style="display: none">
+                  <label for="numAllergies"
+                    >How many allergies do you have? (Limit: 5)</label
+                  >
+                  <input
+                    type="number"
+                    id="numAllergies"
+                    name="numAllergies"
+                    min="1"
+                    max="5"
+                  />
+                  <div id="allergyTextboxes"></div>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div class="final">
+            <h3 id="form-header">
+              What key qualities are you looking for in your choices of
+              restaurants
+            </h3>
+            <input
+              type="text"
+              placeholder="ex: good value, decent service, etc."
+              name="quality-preference"
+              id="pref-quality"
+            />
+
+            <h3 id="form-header">
+              What other restaurants do you want your choices to match
+            </h3>
+            <input
+              type="text"
+              placeholder="ex: Sangnam Indian Cuisine, Four Seasons, etc."
+              name="restaurant-preference"
+              id="pref-restaurant"
+            />
+
+            <input type="button" value="Submit" id="submission-button" />
+          </div>
         </div>
       </div>
     </div>
