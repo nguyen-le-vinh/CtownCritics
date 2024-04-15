@@ -8,6 +8,10 @@ import re
 #import string
 import numpy as np
 import math
+#Angela svd
+from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
+from scipy.sparse.linalg import svds
+from sklearn.preprocessing import normalize
 
 
 # ROOT_PATH for linking with all your files. 
@@ -87,8 +91,12 @@ def tokenizer(text):
     """, re.VERBOSE)
   return re.findall(word_regex, text)
 
+res_to_smushed_reviews = []
+all_reviews = []
+
 #loop through all restaurants
 for restaurant in data.keys():
+  smushed_reviews = ""
   #we won't be deleting any restaurants so we can do this bit now
   res_to_num[restaurant] = total_restaurants
   num_to_res[total_restaurants] = restaurant
@@ -97,7 +105,11 @@ for restaurant in data.keys():
   try:
     for review in data[restaurant]['reviews']:
       #tokenize
-      tokens = list(set(tokenizer(review.lower())))
+      lowercased = review.lower()
+      res_to_smushed_reviews.append(lowercased)
+      all_reviews.append(lowercased)
+      smushed_reviews += ' ' + lowercased
+      tokens = list(set(tokenizer(lowercased)))
       total_reviews += 1
       #update occurrence list 
       for token in tokens:
@@ -108,6 +120,7 @@ for restaurant in data.keys():
         word_set.add(token)
   except:
     pass
+  #res_to_smushed_reviews.append(smushed_reviews)
 
 #filter for good types
 for word in word_set:
@@ -168,6 +181,31 @@ for term in idf.keys():
 result = (np.vectorize(math.sqrt))(norms)
 #end
 
+#Angela attempted SVD
+#create co-occurrence matrix (modified from code given in lecture 9)
+
+count_vec = CountVectorizer(stop_words='english', min_df = MIN_FREQ, binary = True)
+rev_vocab = count_vec.fit_transform(all_reviews)
+#svd_tokens = list(count_vec.get_feature_names_out)
+term_rev_matrix = rev_vocab.toarray().T
+cooccurrence = np.dot(term_rev_matrix, term_rev_matrix.T)
+#svd from lecture 17/18
+vectorizer = TfidfVectorizer(stop_words = 'english', max_df = .7, min_df = 75)
+td_matrix = vectorizer.fit_transform(res_to_smushed_reviews)
+docs_compressed, s, words_compressed = svds(td_matrix, k=100)
+words_compressed = words_compressed.transpose()
+word_to_index = vectorizer.vocabulary_
+index_to_word = {i:t for t,i in word_to_index.items()}
+words_compressed_normed = normalize(words_compressed, axis = 1)
+docs_compressed_normed = normalize(docs_compressed)
+
+#this is the method that will give you the svd
+def closest_projects_to_single_query(query_vec_in, k = 5):
+    sims = docs_compressed_normed.dot(query_vec_in)
+    asort = np.argsort(-sims)[:k+1]
+    return [(i, num_to_res[i], sims[i]) for i in asort[1:]]
+#end
+
 #Amirah's dot product calculation
 def accumulate_dot_scores(query_word_counts, index, idf):
     result = {}
@@ -217,12 +255,37 @@ CORS(app)
 
 
 # Sample search using json with pandas
-def json_search(locPreference, pricePreference, foodPreference, qualityPreference, restaurantPreference):
+'''def json_search(locPreference1, pricePreference1, locPreference2, pricePreference2, foodPreference, qualityPreference, restaurantPreference):
     # change later once more info has been added to json
     # ie. location of restaurant + price info
     combined = {'results': []}
     raw_results = ranks(foodPreference + " " + qualityPreference)[:5]
     for i in range(len(raw_results)):
+      rest = num_to_res[raw_results[i][1]]
+      ratings = data[rest]['star rating']
+      rating_score = 0
+      rating_total = 0
+    
+      for r in ratings:
+        rating_score += ratings[r] * int(r)
+        rating_total += ratings[r]
+      combined['results'].append({'name': rest, 'reviews': data[rest]['reviews'][:2], 'rating': round(rating_score/rating_total, 2)})
+
+    return json.loads(json.dumps(combined))'''
+
+def json_search(locPreference1, pricePreference1, locPreference2, pricePreference2, foodPreference, qualityPreference, restaurantPreference):
+    # change later once more info has been added to json
+    # ie. location of restaurant + price info
+    combined = {'results': []}
+    raw_results = ranks(foodPreference + " " + qualityPreference)[:5]
+    svd_results = []
+    try:
+      svd_results = closest_projects_to_single_query(restaurantPreference)
+    except:
+      pass
+    for i in range(len(raw_results)):
+      if i == 1 and len(svd_results) != 0:
+        rest = svd_results[i][1]
       rest = num_to_res[raw_results[i][1]]
       ratings = data[rest]['star rating']
       rating_score = 0
@@ -241,12 +304,25 @@ def home():
 
 @app.route("/restaurants")
 def episodes_search():
-    locPreference = request.args.get("locPreference")
-    pricePreference = request.args.get("pricePreference")
-    foodPreference = request.args.get("foodPreference")
-    qualityPreference = request.args.get("qualityPreference")
-    restaurantPreference = request.args.get("restaurantPreference") 
-    return json_search(locPreference, pricePreference, foodPreference, qualityPreference, restaurantPreference)
+    locPreference1 = request.args.get("locPreference1")
+    pricePreference1 = request.args.get("pricePreference1")
+    foodPreference = request.args.get("foodPreference1") + " " + request.args.get("foodPreference2")
+    qualityPreference = request.args.get("qualityPreference1") + " " + request.args.get("qualityPreference2")
+    restaurantPreference = request.args.get("restaurantPreference1") + " " + request.args.get("restaurantPreference2")
+    locPreference2 = request.args.get("locPreference2")
+    pricePreference2 = request.args.get("pricePreference2")
+    return json_search(locPreference1, pricePreference1, locPreference2, pricePreference2, foodPreference, qualityPreference, restaurantPreference)
+'''@app.route("/restaurants", methods=["POST"])
+def episodes_search():
+        print("hello")
+        data = request.get_json()
+        locPreference = data.get("locPreference")
+        pricePreference = data.get("pricePreference")
+        foodPreference = data.get("foodPreference")
+        qualityPreference = data.get("qualityPreference")
+        restaurantPreference = data.get("restaurantPreference")
+        return json_search(locPreference, pricePreference, foodPreference, qualityPreference, restaurantPreference)'''
+
 
 if 'DB_NAME' not in os.environ:
     app.run(debug=True,host="0.0.0.0",port=5000)

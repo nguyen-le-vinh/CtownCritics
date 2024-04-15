@@ -74,6 +74,7 @@ body {
 }
 
 .top-text {
+  width: 65%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -153,16 +154,80 @@ h2 {
   margin-bottom: 0;
 }
 
-.input-form {
+/*.input-form {
+  flex: 1 0 45%; 
+  max-width: 45%; 
+  box-sizing: border-box;
+  padding: 10px;
   background-color: white;
-  width: 100%;
-  width: 100%;
   padding-top: 2px;
   padding-bottom: 15px;
   margin: 0 0 50px 0;
   font-family: "Arial Rounded MT Bold", Arial, sans-serif;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
+}*/
+.input-form {
+  box-sizing: border-box;
+  padding: 10px;
+  background-color: white;
+  padding-top: 2px;
+  padding-bottom: 15px;
+  /*margin: 0 0 50px 0;*/
+  font-family: "Arial Rounded MT Bold", Arial, sans-serif;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  justify-content: center;
+}
+
+/*.form-container {
+  width: 50%;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 10px;
+}*/
+
+.form-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.space {
+  flex: 1 0 10%;
+  max-width: 10%; 
+  box-sizing: border-box;
+  padding: 10px; 
+}
+
+#submit-container {
+  margin: auto;
+  text-align: center;
+}
+
+button[value="Submit"] {
+  background-color: #c0b736;
+  border: none;
+  box-shadow: 0 4px 8px 0 rgba(59, 58, 56, 0.8),
+    0 6px 20px 0 rgba(59, 58, 56, 0.8);
+  color: white;
+  text-shadow: -1px 0 rgba(31, 31, 30, 0.8), 0 1px rgba(31, 31, 30, 0.8),
+    1px 0 rgba(31, 31, 30, 0.8), 0 -1px rgba(31, 31, 30, 0.8);
+  font-family: "Varela Round", "Lucida Console", Arial, sans-serif;
+  padding: 5px 5px;
+  text-align: center;
+  font-size: 16px;
+  margin-top: 1%;
+  margin-bottom: 1%;
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+
+button[value="Submit"]:hover {
+  background-color: #726d22;
+  text-shadow: none;
+  box-shadow: none;
+  cursor: pointer;
 }
 
 input[value="Submit"] {
@@ -176,9 +241,11 @@ input[value="Submit"] {
   font-family: "Varela Round", "Lucida Console", Arial, sans-serif;
   padding: 5px 5px;
   text-align: center;
-  display: inline-block;
+  display: block;
   font-size: 16px;
-  margin: 4px 2px;
+  margin: auto;
+  margin-top: 2%;
+  margin-bottom: 5%;
   transition-duration: 0.4s;
   cursor: pointer;
 }
@@ -283,7 +350,7 @@ input[value="Submit"]:hover {
 
 .checkbox-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   grid-gap: 10px;
   margin-top: 10px;
 }
