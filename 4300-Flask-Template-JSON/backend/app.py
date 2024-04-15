@@ -9,6 +9,12 @@ import math
 import re
 import numpy as np
 import math
+<<<<<<< Updated upstream
+=======
+from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
+from scipy.sparse.linalg import svds
+from sklearn.preprocessing import normalize
+>>>>>>> Stashed changes
 
 # ROOT_PATH for linking with all your files. 
 # Feel free to use a config.py or settings.py with a global export variable
@@ -95,9 +101,12 @@ def tokenizer(text):
     """, re.VERBOSE)
   return re.findall(word_regex, text)
 
+res_to_smushed_reviews = []
+all_reviews = []
 #loop through all restaurants
 for restaurant in data.keys():
   #we won't be deleting any restaurants so we can do this bit now
+  smushed_reviews = ""
   res_to_num[restaurant] = total_restaurants
   num_to_res[total_restaurants] = restaurant
   total_restaurants += 1
@@ -105,7 +114,10 @@ for restaurant in data.keys():
   try:
     for review in data[restaurant]['reviews']:
       #tokenize
-      tokens = list(set(tokenizer(review.lower())))
+      lowercased = review.lower()
+      all_reviews.append(lowercased)
+      smushed_reviews += ' ' + lowercased
+      tokens = list(set(tokenizer(lowercased)))
       total_reviews += 1
       #update occurrence list 
       for token in tokens:
@@ -116,6 +128,7 @@ for restaurant in data.keys():
         word_set.add(token)
   except:
     pass
+  res_to_smushed_reviews.append(smushed_reviews)
 
 #filter for good types
 for word in word_set:
@@ -176,6 +189,34 @@ for term in idf.keys():
 result = (np.vectorize(math.sqrt))(norms)
 #end
 
+<<<<<<< Updated upstream
+=======
+#Angela attempted SVD
+#create co-occurrence matrix (modified from code given in lecture 9)
+'''
+count_vec = CountVectorizer(stop_words='english', min_df = MIN_FREQ, binary = True)
+rev_vocab = count_vec.fit_transform(all_reviews)
+svd_tokens = list(count_vec.get_feature_names_out)
+term_rev_matrix = rev_vocab.toarray().T
+cooccurrence = np.dot(term_rev_matrix, term_rev_matrix.T)
+#svd from lecture 17/18
+vectorizer = TfidfVectorizer(stop_words = 'english', max_df = .7, min_df = 75)
+td_matrix = vectorizer.fit_transform([res_to_smushed_reviews])
+docs_compressed, s, words_compressed = svds(td_matrix, k=100)
+words_compressed = words_compressed.transpose()
+word_to_index = vectorizer.vocabulary_
+index_to_word = {i:t for t,i in word_to_index.items()}
+words_compressed_normed = normalize(words_compressed, axis = 1)
+docs_compressed_normed = normalize(docs_compressed)
+
+#this is the method that will give you the svd
+def closest_projects_to_single_query(query_vec_in, k = 5):
+    sims = docs_compressed_normed.dot(query_vec_in)
+    asort = np.argsort(-sims)[:k+1]
+    return [(i, num_to_res[i], sims[i]) for i in asort[1:]]
+'''
+    
+>>>>>>> Stashed changes
 #Amirah's dot product calculation
 def accumulate_dot_scores(query_word_counts, index, idf):
     result = {}
@@ -193,6 +234,7 @@ def accumulate_dot_scores(query_word_counts, index, idf):
     return result
 #end
 
+<<<<<<< Updated upstream
 def ranks(query):
     #process query
     tokenized_query = tokenizer(query.lower())
@@ -204,6 +246,54 @@ def ranks(query):
       else:
          query_word_counts[word] = 1
 
+=======
+#combine multiple queries; for now this is just going to be an average
+def combine_queries(query_list):
+  combined_word_counts = {}
+  combined_token_set = ()
+  for query in query_list:
+    for review in data[query]:
+      tokenized_review = tokenizer(review.lower())
+      review_token_set = set(tokenized_review)
+      if word in good_types:
+        for word in review_token_set:
+          if word in combined_word_counts:
+            combined_word_counts[word] += 1
+          else:
+            combined_word_counts[word] = 1
+  return (combined_word_counts, combined_token_set)
+  
+
+def multi_q_ranks(query_list):
+  combined_word_counts, combined_token_set = combine_queries(query_list)
+  #amirah cosine calculation but changed to combined_word_counts
+  score_acc = accumulate_dot_scores(combined_word_counts, inv_idx, idf)
+  doc_denom_dict = norms
+  q_denom_sq = 0
+  for word in combined_token_set:
+    if word in idf.keys() and word in combined_word_counts.keys():
+      q_denom_sq += (combined_word_counts[word] * idf[word]) ** 2
+  q_denom = math.sqrt(q_denom_sq)
+
+  result = [(score_acc[doc_id]/((q_denom * doc_denom_dict[doc_id]) + 1), doc_id) for doc_id in score_acc.keys()]
+  result.sort(key=lambda score: score[0], reverse=True)
+  #end
+  return result
+
+def ranks(query):
+    #process query
+    res_name = query.lower()
+    query_word_counts = {}
+    for review in restaurant[res_name]:
+      tokenized_rev = tokenizer(review.lower())
+      review_token_set = set(tokenized_rev)
+      for word in review_token_set:
+        if word in good_types:
+          if word in query_word_counts:
+            query_word_counts[word] += 1
+          else:
+            query_word_counts[word] = 1
+>>>>>>> Stashed changes
     #Amirah's cosine calculation
     score_acc = accumulate_dot_scores(query_word_counts, inv_idx, idf)
     doc_denom_dict = norms
