@@ -115,7 +115,16 @@
             "3": 11,
             "4": 66,
             "5": 113
-        }
+        },
+        "amenities": [
+            "takeout",
+            "vegetarian",
+            "wheelchair accessible",
+            "delivery",
+            "credit cards",
+            "gender-neutral restroom"
+        ],
+        "on campus": false
     },
     "Souvlaki House": {
         "reviews": [
@@ -601,7 +610,14 @@
             "3": 29,
             "4": 69,
             "5": 208
-        }
+        },
+        "amenities": [
+            "takeout",
+            "vegetarian",
+            "outdoor",
+            "credit cards"
+        ],
+        "on campus": false
     },
     "Koko": {
         "reviews": [
@@ -747,7 +763,13 @@
             "3": 29,
             "4": 45,
             "5": 138
-        }
+        },
+        "amenities": [
+            "delivery",
+            "credit cards",
+            "takeout"
+        ],
+        "on campus": false
     },
     "Fusia Bento Bar": {
         "reviews": [
@@ -840,7 +862,12 @@
             "3": 9,
             "4": 10,
             "5": 68
-        }
+        },
+        "amenities": [
+            "vegetarian",
+            "delivery"
+        ],
+        "on campus": false
     },
     "Pho Time Vietnamese Cuisine": {
         "reviews": [
@@ -934,7 +961,12 @@
             "3": 13,
             "4": 24,
             "5": 79
-        }
+        },
+        "amenities": [
+            "takeout",
+            "credit cards"
+        ],
+        "on campus": false
     },
     "Dos Amigos": {
         "reviews": [
@@ -1151,7 +1183,16 @@
             "3": 2,
             "4": 14,
             "5": 123
-        }
+        },
+        "amenities": [
+            "takeout",
+            "credit cards",
+            "wheelchair accessible",
+            "vegan",
+            "delivery",
+            "wi-fi"
+        ],
+        "on campus": false
     },
     "D.P. Dough": {
         "reviews": [
@@ -1457,7 +1498,17 @@
             "3": 31,
             "4": 65,
             "5": 158
-        }
+        },
+        "amenities": [
+            "takeout",
+            "vegan",
+            "wi-fi",
+            "gender-neutral restroom",
+            "delivery",
+            "credit cards",
+            "outdoor"
+        ],
+        "on campus": false
     },
     "Jack's Grill": {
         "reviews": [
@@ -1734,7 +1785,15 @@
             "3": 29,
             "4": 54,
             "5": 105
-        }
+        },
+        "amenities": [
+            "takeout",
+            "vegetarian",
+            "delivery",
+            "credit cards",
+            "wi-fi"
+        ],
+        "on campus": false
     },
     "Wings Over Ithaca": {
         "reviews": [
@@ -2145,7 +2204,14 @@
             "3": 28,
             "4": 72,
             "5": 229
-        }
+        },
+        "amenities": [
+            "takeout",
+            "credit cards",
+            "wheelchair accessible",
+            "delivery"
+        ],
+        "on campus": false
     },
     "Plum Tree Restaurant": {
         "reviews": [
@@ -2245,7 +2311,14 @@
             "3": 26,
             "4": 43,
             "5": 47
-        }
+        },
+        "amenities": [
+            "delivery",
+            "vegetarian",
+            "reservations",
+            "credit cards"
+        ],
+        "on campus": false
     },
     "The Embassy": {
         "reviews": [
@@ -2283,7 +2356,16 @@
             "3": 0,
             "4": 1,
             "5": 23
-        }
+        },
+        "amenities": [
+            "delivery",
+            "credit cards",
+            "wheelchair accessible",
+            "takeout",
+            "outdoor",
+            "wi-fi"
+        ],
+        "on campus": false
     },
     "Gangnam Station": {
         "reviews": [
@@ -2330,7 +2412,14 @@
             "3": 4,
             "4": 7,
             "5": 37
-        }
+        },
+        "amenities": [
+            "takeout",
+            "vegetarian",
+            "delivery",
+            "credit cards"
+        ],
+        "on campus": false
     },
     "Asian Chili Spot": {
         "reviews": [
@@ -2366,7 +2455,12 @@
             "3": 2,
             "4": 4,
             "5": 24
-        }
+        },
+        "amenities": [
+            "takeout",
+            "delivery"
+        ],
+        "on campus": false
     },
     "Four Seasons": {
         "reviews": [
@@ -2486,7 +2580,13 @@
             "3": 17,
             "4": 52,
             "5": 92
-        }
+        },
+        "amenities": [
+            "taekout",
+            "credit cards",
+            "delivery"
+        ],
+        "on campus": false
     },
     "Mama Teresa's Pizzeria": {
         "reviews": [
@@ -2542,7 +2642,14 @@
             "3": 6,
             "4": 8,
             "5": 5
-        }
+        },
+        "amenities": [
+            "delivery",
+            "outdoor",
+            "takeout",
+            "credit cards"
+        ],
+        "on campus": false
     },
     "Collegetown Bagels": {
         "reviews": [
@@ -3123,7 +3230,19 @@
             "3": 91,
             "4": 312,
             "5": 713
-        }
+        },
+        "amenities": [
+            "takeout",
+            "vegan",
+            "android pay",
+            "apple pay",
+            "credit cards",
+            "outdoor",
+            "wi-fi",
+            "wheelchair accessible",
+            "gender-neutral restroom"
+        ],
+        "on campus": false
     },
     "De Tasty Hot Pot Restaurant": {
         "reviews": [
@@ -3277,7 +3396,16 @@
             "3": 14,
             "4": 45,
             "5": 143
-        }
+        },
+        "amenities": [
+            "delivery",
+            "vegetarian",
+            "gender-neutral restroom",
+            "reservations",
+            "vegan",
+            "credit cards"
+        ],
+        "on campus": false
     },
     "Sangam Indian Cuisine": {},
     "Sangnam Indian Cuisine": {
@@ -3593,7 +3721,13 @@
             "3": 37,
             "4": 76,
             "5": 262
-        }
+        },
+        "amenities": [
+            "reservations",
+            "delivery",
+            "vegan"
+        ],
+        "on campus": false
     },
     "North Star Dining Room": {
         "reviews": [
@@ -3651,7 +3785,15 @@
             "3": 18,
             "4": 58,
             "5": 98
-        }
+        },
+        "amenities": [
+            "vegan",
+            "vegetarian",
+            "meal swipes",
+            "credit cards",
+            "wi-fi"
+        ],
+        "on campus": true
     },
     "Trillium": {
         "reviews": [
@@ -3735,7 +3877,17 @@
             "3": 30,
             "4": 87,
             "5": 104
-        }
+        },
+        "amenities": [
+            "takeout",
+            "vegetarian",
+            "ourdoor",
+            "wi-fi",
+            "delivery",
+            "credit cards",
+            "brbs"
+        ],
+        "on campus": true
     },
     "Goldie's Caf\u00e9": {
         "reviews": [
@@ -3758,7 +3910,15 @@
             "3": 4,
             "4": 14,
             "5": 20
-        }
+        },
+        "amenities": [
+            "takeout",
+            "vegetarian",
+            "credit cards",
+            "brbs",
+            "wi-fi"
+        ],
+        "on campus": true
     },
     "Big Red Barn": {
         "reviews": [
@@ -3814,7 +3974,14 @@
             "3": 14,
             "4": 36,
             "5": 134
-        }
+        },
+        "amenities": [
+            "takeout",
+            "outdoor",
+            "credit cards",
+            "wi-fi"
+        ],
+        "on campus": true
     },
     "Cook House Dining Room": {
         "reviews": [
@@ -3844,7 +4011,16 @@
             "3": 6,
             "4": 19,
             "5": 37
-        }
+        },
+        "amenities": [
+            "vegetarian",
+            "vegan",
+            "credit cards",
+            "takeout",
+            "meal swipes",
+            "wi-fi"
+        ],
+        "on campus": true
     },
     "Cornell Dining": {
         "reviews": [
@@ -3861,7 +4037,16 @@
             "3": 1,
             "4": 0,
             "5": 7
-        }
+        },
+        "amenities": [
+            "vegetarian",
+            "vegan",
+            "credit cards",
+            "takeout",
+            "meal swipes",
+            "wi-fi"
+        ],
+        "on campus": true
     },
     "Atrium Cafe": {
         "reviews": [
@@ -3882,7 +4067,13 @@
             "3": 7,
             "4": 10,
             "5": 9
-        }
+        },
+        "amenities": [
+            "delivery",
+            "takeout",
+            "wi-fi"
+        ],
+        "on campus": true
     },
     "Franny's": {
         "reviews": [
@@ -3908,7 +4099,12 @@
             "3": 0,
             "4": 4,
             "5": 14
-        }
+        },
+        "amenities": [
+            "takeout",
+            "credit cards"
+        ],
+        "on campus": true
     },
     "Mac's Cafe": {
         "reviews": [
@@ -3941,7 +4137,14 @@
             "3": 10,
             "4": 21,
             "5": 25
-        }
+        },
+        "amenities": [
+            "takeout",
+            "credit cards",
+            "brbs",
+            "wi-fi"
+        ],
+        "on campus": true
     },
     "The Terrace Restaurant": {
         "reviews": [
@@ -4008,7 +4211,15 @@
             "3": 8,
             "4": 40,
             "5": 84
-        }
+        },
+        "amenities": [
+            "vegetarian",
+            "vegan",
+            "credit cards",
+            "brbs",
+            "wi-fi"
+        ],
+        "on campus": true
     },
     "The Establishment": {
         "reviews": [
@@ -4026,7 +4237,15 @@
             "3": 0,
             "4": 2,
             "5": 5
-        }
+        },
+        "amenities": [
+            "reservations",
+            "takeout",
+            "wi-fi",
+            "delivery",
+            "credit cards"
+        ],
+        "on campus": true
     },
     "Morrison Dining": {
         "reviews": [
@@ -4072,7 +4291,16 @@
             "3": 4,
             "4": 17,
             "5": 49
-        }
+        },
+        "amenities": [
+            "takeout",
+            "wi-fi",
+            "meal swipes",
+            "credit cards",
+            "vegan",
+            "vegetarian"
+        ],
+        "on campus": true
     },
     "Okenshields": {
         "reviews": [
@@ -4129,7 +4357,15 @@
             "3": 30,
             "4": 49,
             "5": 64
-        }
+        },
+        "amenities": [
+            "takeout",
+            "vegetarian",
+            "vegan",
+            "meal swipes",
+            "credit cards"
+        ],
+        "on campus": true
     },
     "Louie\u2019s Food Truck": {
         "reviews": [
@@ -4149,7 +4385,13 @@
             "3": 0,
             "4": 2,
             "5": 11
-        }
+        },
+        "amenities": [
+            "takeout",
+            "vegetarian",
+            "credit cards"
+        ],
+        "on campus": true
     },
     "Risley Dining Room": {
         "reviews": [
@@ -4169,7 +4411,16 @@
             "3": 4,
             "4": 9,
             "5": 23
-        }
+        },
+        "amenities": [
+            "takeout",
+            "vegetarian",
+            "vegan",
+            "credit cards",
+            "meal swipes",
+            "wi-fi"
+        ],
+        "on campus": true
     },
     "Mattin's Caf\u00e9": {
         "reviews": [
@@ -4194,7 +4445,15 @@
             "3": 7,
             "4": 2,
             "5": 23
-        }
+        },
+        "amenities": [
+            "delivery",
+            "apple pay",
+            "credit cards",
+            "takeout",
+            "wi-fi"
+        ],
+        "on campus": true
     },
     "Rose House Dining Room": {
         "reviews": [
@@ -4208,5 +4467,13 @@
             "4": 4,
             "5": 9
         }
-    }
+    },
+    "amenities": [
+        "delivery",
+        "apple pay",
+        "credit cards",
+        "takeout",
+        "wi-fi"
+    ],
+    "on campus": true
 }
