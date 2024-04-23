@@ -154,52 +154,22 @@ h2 {
   margin-bottom: 0;
 }
 
-/*.input-form {
-  flex: 1 0 45%; 
-  max-width: 45%; 
+
+.form-container {
   box-sizing: border-box;
   padding: 10px;
   background-color: white;
   padding-top: 2px;
-  padding-bottom: 15px;
-  margin: 0 0 50px 0;
-  font-family: "Arial Rounded MT Bold", Arial, sans-serif;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-}*/
-.input-form {
-  box-sizing: border-box;
   width: 100%;
-  padding: 10px;
-  background-color: white;
-  padding-top: 2px;
   padding-bottom: 15px;
-  /*margin: 0 0 50px 0;*/
+
   font-family: "Arial Rounded MT Bold", Arial, sans-serif;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   justify-content: center;
 }
 
-.form-container {
-  width: 50%;
-  margin: auto;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-gap: 10px;
-}
 
-/* .form-container {
-  display: flex;
-  flex-direction: row;
-}
-
-.space {
-  flex: 1 0 10%;
-  max-width: 10%; 
-  box-sizing: border-box;
-  padding: 10px; 
-} */
 
 #submit-container {
   margin: auto;
@@ -337,18 +307,41 @@ input[value="Submit"]:hover {
   display: block;
 }
 
-.input-form > div:nth-child(1),
-.input-form > div:nth-child(2),
-.input-form > div:nth-child(3),
-.input-form > div:nth-child(4),
-.input-form > div:nth-child(5) {
-  background-color: #e0e0e0;
+#repeat-form {
+  width: 100%;
+}
+
+.repeat-form-label {
+  width: 80%;
+  margin: 10px auto;
+  padding: 10px;
+}
+#repeat-form-button {
+  background-color: #c0b736;
+  display: block;
+  padding: 10px;
+  font-weight: bold;
+  text-align: center;
+  margin: 10px;
+}
+
+.input-form > div:nth-child(odd),
+.input-form > div:nth-child(even),
+.final {
   margin: 20px auto;
   width: 80%;
   border-radius: 10px;
   padding: 20px;
 }
-
+.final {
+  background-color: #e0e0e06b;
+}
+.input-form > div:nth-child(odd) {
+  background-color: none;
+}
+.input-form > div:nth-child(even) {
+  background-color: #e0e0e0d1;
+}
 .checkbox-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -370,4 +363,8 @@ input[value="Submit"]:hover {
   color: #4caf50;
   margin-bottom: 10px;
   font-style: italic;
+}
+
+.hidden {
+  display: none;
 }
