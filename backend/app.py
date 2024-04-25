@@ -277,16 +277,24 @@ def json_search(locPreference1, pricePreference1, locPreference2, pricePreferenc
     # change later once more info has been added to json
     # ie. location of restaurant + price info
     combined = {'results': []}
-    raw_results = ranks(foodPreference + " " + qualityPreference)[:5]
+    raw_results = ranks(foodPreference + " " + qualityPreference) # removed limit of 5 due to location preference 
     svd_results = []
     try:
       svd_results = closest_projects_to_single_query(restaurantPreference)
     except:
       pass
+    
+    recommendations = 0
+
     for i in range(len(raw_results)):
       if i == 1 and len(svd_results) != 0:
         rest = svd_results[i][1]
       rest = num_to_res[raw_results[i][1]]
+      # incorporating location preferences
+      if locPreference1 != "No Preference":
+        if locPreference1 != data[rest]['location']: 
+          continue
+
       ratings = data[rest]['star rating']
       rating_score = 0
       rating_total = 0
@@ -295,6 +303,10 @@ def json_search(locPreference1, pricePreference1, locPreference2, pricePreferenc
         rating_score += ratings[r] * int(r)
         rating_total += ratings[r]
       combined['results'].append({'name': rest, 'reviews': data[rest]['reviews'][:2], 'rating': round(rating_score/rating_total, 2)})
+      recommendations += 1
+
+      if recommendations > 5:
+        break
 
     return json.loads(json.dumps(combined))
 
