@@ -116,6 +116,10 @@
             "3": 11,
             "4": 66,
             "5": 113
+        },
+        "dietary": {
+            "vegetarian": true,
+            "vegan": false
         }
     },
     "Souvlaki House": {
@@ -603,6 +607,10 @@
             "3": 29,
             "4": 69,
             "5": 208
+        },
+        "dietary": {
+            "vegetarian": true,
+            "vegan": false
         }
     },
     "Koko": {
@@ -750,6 +758,10 @@
             "3": 29,
             "4": 45,
             "5": 138
+        },
+        "dietary": {
+            "vegetarian": false,
+            "vegan": false
         }
     },
     "Fusia Bento Bar": {
@@ -844,6 +856,10 @@
             "3": 9,
             "4": 10,
             "5": 68
+        },
+        "dietary": {
+            "vegetarian": true,
+            "vegan": false
         }
     },
     "Pho Time Vietnamese Cuisine": {
@@ -939,6 +955,10 @@
             "3": 13,
             "4": 24,
             "5": 79
+        },
+        "dietary": {
+            "vegetarian": true,
+            "vegan": false
         }
     },
     "Dos Amigos": {
@@ -1157,6 +1177,10 @@
             "3": 2,
             "4": 14,
             "5": 123
+        },
+        "dietary": {
+            "vegetarian": true,
+            "vegan": true
         }
     },
     "D.P. Dough": {
@@ -1464,6 +1488,10 @@
             "3": 31,
             "4": 65,
             "5": 158
+        },
+        "dietary": {
+            "vegetarian": false,
+            "vegan": false
         }
     },
     "Jack's Grill": {
@@ -1742,6 +1770,10 @@
             "3": 29,
             "4": 54,
             "5": 105
+        },
+        "dietary": {
+            "vegetarian": false,
+            "vegan": false
         }
     },
     "Wings Over Ithaca": {
@@ -2154,6 +2186,10 @@
             "3": 28,
             "4": 72,
             "5": 229
+        },
+        "dietary": {
+            "vegetarian": false,
+            "vegan": false
         }
     },
     "Plum Tree Restaurant": {
@@ -2255,6 +2291,10 @@
             "3": 26,
             "4": 43,
             "5": 47
+        },
+        "dietary": {
+            "vegetarian": false,
+            "vegan": false
         }
     },
     "The Embassy": {
@@ -2294,6 +2334,10 @@
             "3": 0,
             "4": 1,
             "5": 23
+        },
+        "dietary": {
+            "vegetarian": false,
+            "vegan": false
         }
     },
     "Gangnam Station": {
@@ -2342,6 +2386,10 @@
             "3": 4,
             "4": 7,
             "5": 37
+        },
+        "dietary": {
+            "vegetarian": false,
+            "vegan": false
         }
     },
     "Asian Chili Spot": {
@@ -2379,6 +2427,10 @@
             "3": 2,
             "4": 4,
             "5": 24
+        },
+        "dietary": {
+            "vegetarian": false,
+            "vegan": false
         }
     },
     "Four Seasons": {
@@ -2500,6 +2552,10 @@
             "3": 17,
             "4": 52,
             "5": 92
+        },
+        "dietary": {
+            "vegetarian": true,
+            "vegan": false
         }
     },
     "Mama Teresa's Pizzeria": {
@@ -2557,6 +2613,10 @@
             "3": 6,
             "4": 8,
             "5": 5
+        },
+        "dietary": {
+            "vegetarian": true,
+            "vegan": false
         }
     },
     "Collegetown Bagels": {
@@ -3139,6 +3199,10 @@
             "3": 91,
             "4": 312,
             "5": 713
+        },
+        "dietary": {
+            "vegetarian": true,
+            "vegan": true
         }
     },
     "De Tasty Hot Pot Restaurant": {
@@ -3294,6 +3358,10 @@
             "3": 14,
             "4": 45,
             "5": 143
+        },
+        "dietary": {
+            "vegetarian": true,
+            "vegan": true
         }
     },
     "Sangnam Indian Cuisine": {
@@ -3610,6 +3678,10 @@
             "3": 37,
             "4": 76,
             "5": 262
+        },
+        "dietary": {
+            "vegetarian": true,
+            "vegan": true
         }
     },
     "North Star Dining Room": {
@@ -3669,6 +3741,10 @@
             "3": 18,
             "4": 58,
             "5": 98
+        },
+        "dietary": {
+            "vegetarian": true,
+            "vegan": true
         }
     },
     "Trillium": {
@@ -3754,6 +3830,10 @@
             "3": 30,
             "4": 87,
             "5": 104
+        },
+        "dietary": {
+            "vegetarian": true,
+            "vegan": false
         }
     },
     "Goldie's Caf\u00e9": {
@@ -3778,6 +3858,10 @@
             "3": 4,
             "4": 14,
             "5": 20
+        },
+        "dietary": {
+            "vegetarian": true,
+            "vegan": false
         }
     },
     "Big Red Barn": {
@@ -3835,6 +3919,10 @@
             "3": 14,
             "4": 36,
             "5": 134
+        },
+        "dietary": {
+            "vegetarian": false,
+            "vegan": false
         }
     },
     "Cook House Dining Room": {
@@ -3866,6 +3954,10 @@
             "3": 6,
             "4": 19,
             "5": 37
+        },
+        "dietary": {
+            "vegetarian": true,
+            "vegan": true
         }
     },
     "Cornell Dining": {
@@ -3884,6 +3976,10 @@
             "3": 1,
             "4": 0,
             "5": 7
+        },
+        "dietary": {
+            "vegetarian": false,
+            "vegan": false
         }
     },
     "Atrium Cafe": {
@@ -3906,6 +4002,10 @@
             "3": 7,
             "4": 10,
             "5": 9
+        },
+        "dietary": {
+            "vegetarian": false,
+            "vegan": false
         }
     },
     "Franny's": {
@@ -3933,6 +4033,10 @@
             "3": 0,
             "4": 4,
             "5": 14
+        },
+        "dietary": {
+            "vegetarian": false,
+            "vegan": false
         }
     },
     "Mac's Cafe": {
@@ -3967,6 +4071,10 @@
             "3": 10,
             "4": 21,
             "5": 25
+        },
+        "dietary": {
+            "vegetarian": false,
+            "vegan": false
         }
     },
     "The Terrace Restaurant": {
@@ -4035,6 +4143,10 @@
             "3": 8,
             "4": 40,
             "5": 84
+        },
+        "dietary": {
+            "vegetarian": true,
+            "vegan": true
         }
     },
     "The Establishment": {
@@ -4054,6 +4166,10 @@
             "3": 0,
             "4": 2,
             "5": 5
+        },
+        "dietary": {
+            "vegetarian": false,
+            "vegan": false
         }
     },
     "Morrison Dining": {
@@ -4101,6 +4217,10 @@
             "3": 4,
             "4": 17,
             "5": 49
+        },
+        "dietary": {
+            "vegetarian": true,
+            "vegan": true
         }
     },
     "Okenshields": {
@@ -4159,6 +4279,10 @@
             "3": 30,
             "4": 49,
             "5": 64
+        },
+        "dietary": {
+            "vegetarian": true,
+            "vegan": true
         }
     },
     "Louie\u2019s Food Truck": {
@@ -4180,6 +4304,10 @@
             "3": 0,
             "4": 2,
             "5": 11
+        },
+        "dietary": {
+            "vegetarian": true,
+            "vegan": false
         }
     },
     "Risley Dining Room": {
@@ -4201,6 +4329,10 @@
             "3": 4,
             "4": 9,
             "5": 23
+        },
+        "dietary": {
+            "vegetarian": true,
+            "vegan": true
         }
     },
     "Mattin's Caf\u00e9": {
@@ -4227,6 +4359,10 @@
             "3": 7,
             "4": 2,
             "5": 23
+        },
+        "dietary": {
+            "vegetarian": true,
+            "vegan": true
         }
     },
     "Rose House Dining Room": {
@@ -4241,6 +4377,10 @@
             "3": 1,
             "4": 4,
             "5": 9
+        },
+        "dietary": {
+            "vegetarian": true,
+            "vegan": true
         }
     }
 }
