@@ -294,7 +294,15 @@ def json_search(locPreference1, pricePreference1, locPreference2, pricePreferenc
       if locPreference1 != "No Preference":
         if locPreference1 != data[rest]['location']: 
           continue
-
+      #incorporate dietary restrictions
+      if pricePreference1 != "":
+        tokens = tokenizer(pricePreference1.lower())
+        if "vegan" in tokens:
+          if data[rest]['dietary']['vegan']:
+            continue
+        if "vegetarian" in tokens:
+          if data[rest]['dietary']['vegetarian']:
+            continue
       ratings = data[rest]['star rating']
       rating_score = 0
       rating_total = 0
