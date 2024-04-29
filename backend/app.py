@@ -12,6 +12,7 @@ import math
 from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
 from scipy.sparse.linalg import svds
 from sklearn.preprocessing import normalize
+import copy
 
 
 # ROOT_PATH for linking with all your files. 
@@ -30,6 +31,86 @@ with open(json_file_path, 'r') as file:
     restaurants_df = pd.DataFrame(data)
 
 MIN_FREQ = 10
+
+rest_to_review_dict = {}
+for rest in restaurants_df.keys():
+  try:
+    review_str = (" ".join((restaurants_df[rest]["reviews"]))).lower()
+    rest_to_review_dict.update({rest : review_str})
+  except:
+    pass
+documents = [(rest, rest_to_review_dict[rest], restaurants_df[rest]['star rating'])
+                 for rest in rest_to_review_dict.keys()]
+
+vectorizer = TfidfVectorizer( max_df = .7, min_df = 5)
+td_matrix = vectorizer.fit_transform([x[1] for x in documents])
+
+u, s, v_trans = svds(td_matrix, k=10)
+docs_compressed, s, words_compressed = svds(td_matrix, k=10)
+words_compressed = words_compressed.transpose()
+
+word_to_index = vectorizer.vocabulary_
+index_to_word = {i:t for t,i in word_to_index.items()}
+words_compressed_normed = normalize(words_compressed, axis = 1)
+
+docs_compressed_normed = normalize(docs_compressed)
+
+def get_rest_idx(rest):
+  for i in range(len(documents)):
+    if rest == documents[i][0]:
+      return i
+
+def closest_rest_to_rest(project_index_in, project_repr_in, k = 5):
+    sims = project_repr_in.dot(project_repr_in[project_index_in,:])
+    asort = np.argsort(-sims)[:k+1]
+    return [(documents[i][0],sims[i]) for i in asort[1:]] #return format is "title/score"
+
+def closest_rest_to_query(query_vec_in, k = 5):
+    sims = docs_compressed_normed.dot(query_vec_in)
+    asort = np.argsort(-sims)[:k+1]
+    return [(documents[i][0],sims[i]) for i in asort[1:]]
+
+def get_query_vec_in(query):
+  query_tfidf = vectorizer.transform([query]).toarray()
+  query_vec = normalize(np.dot(query_tfidf, words_compressed)).squeeze()
+  return query_vec
+
+dimension_descriptors = ["price range", "wait time", "cuisine type", "quality", "flavor", "location", "convenience", "service", "variety", "atmosphere"]
+svd_dimensions = {}
+for i in range(10):
+  dimension_col = words_compressed[:,i].squeeze()
+  asort = np.argsort(-dimension_col)
+  svd_dimensions.update({dimension_descriptors[i]: ' '.join([index_to_word[idx] for idx in asort[:10]])})
+
+closest_rests_to_dimensions = {dim: [tup[0] for tup in closest_rest_to_query(get_query_vec_in(svd_dimensions[dim]), 35)] for dim in svd_dimensions.keys()}
+
+def get_dimension_match(rest):
+  dims_dict = copy.deepcopy(closest_rests_to_dimensions)
+  closest_to_top_dim = ""
+  closest_to_top_idx = np.inf
+  sec_to_top_dim = ""
+  sec_to_top_idx = np.inf
+  third_to_top_dim = ""
+  third_to_top_idx = np.inf
+  try:
+    for dim in dims_dict.keys():
+      if dims_dict[dim].index(rest) < closest_to_top_idx:
+        closest_to_top_idx = dims_dict[dim].index(rest)
+        closest_to_top_dim = dim
+    dims_dict.pop(closest_to_top_dim)
+    for dim in dims_dict.keys():
+      if dims_dict[dim].index(rest) < sec_to_top_idx:
+        sec_to_top_idx = dims_dict[dim].index(rest)
+        sec_to_top_dim = dim
+    dims_dict.pop(sec_to_top_dim)
+    for dim in dims_dict.keys():
+      if dims_dict[dim].index(rest) < third_to_top_idx:
+        third_to_top_idx = dims_dict[dim].index(rest)
+        third_to_top_dim = dim
+    return closest_to_top_dim, sec_to_top_dim, third_to_top_dim
+  except:
+    return closest_to_top_dim, sec_to_top_dim, third_to_top_dim
+
 
 # Vinh's initial work
 '''reviews_by_restaurant = {}
@@ -184,7 +265,7 @@ result = (np.vectorize(math.sqrt))(norms)
 #Angela attempted SVD
 #create co-occurrence matrix (modified from code given in lecture 9)
 
-count_vec = CountVectorizer(stop_words='english', min_df = MIN_FREQ, binary = True)
+'''count_vec = CountVectorizer(stop_words='english', min_df = MIN_FREQ, binary = True)
 rev_vocab = count_vec.fit_transform(all_reviews)
 #svd_tokens = list(count_vec.get_feature_names_out)
 term_rev_matrix = rev_vocab.toarray().T
@@ -203,7 +284,7 @@ docs_compressed_normed = normalize(docs_compressed)
 def closest_projects_to_single_query(query_vec_in, k = 5):
     sims = docs_compressed_normed.dot(query_vec_in)
     asort = np.argsort(-sims)[:k+1]
-    return [(i, num_to_res[i], sims[i]) for i in asort[1:]]
+    return [(i, num_to_res[i], sims[i]) for i in asort[1:]]'''
 #end
 
 #Amirah's dot product calculation
@@ -248,6 +329,26 @@ def ranks(query):
     #end
     return result
 
+def get_avgs_from_list(nested_list, score_idx):
+  total_scores = {}
+  for inner_list in nested_list:
+    if score_idx == 0:
+      for score, rest in inner_list:
+        if rest in total_scores.keys():
+          total_scores[rest] += score
+        else:
+          total_scores[rest] = score
+    else:
+      for rest, score in inner_list:
+        if rest in total_scores.keys():
+          total_scores[rest] += score
+        else:
+          total_scores[rest] = score
+  result = [(rest, total_scores[rest]/len(nested_list)) for rest in total_scores.keys()]
+  result.sort(key=lambda score: score[1], reverse=True)
+  return result
+  
+
 #end of angela similarity method
 
 app = Flask(__name__)
@@ -273,36 +374,74 @@ CORS(app)
 
     return json.loads(json.dumps(combined))'''
 
-def json_search(locPreference1, pricePreference1, locPreference2, pricePreference2, foodPreference, qualityPreference, restaurantPreference):
+def json_search(locPreferences, dietaryRstrctns, foodPreferences, qualityPreference, restaurantPreference,):
     # change later once more info has been added to json
     # ie. location of restaurant + price info
     combined = {'results': []}
-    raw_results = ranks(foodPreference + " " + qualityPreference) # removed limit of 5 due to location preference 
-    svd_results = []
+    query = foodPreferences + " " + qualityPreference
+    raw_results = ranks(query) # removed limit of 5 due to location preference 
+    '''svd_results = []
     try:
       svd_results = closest_projects_to_single_query(restaurantPreference)
     except:
-      pass
+      pass'''
+    if restaurantPreference != None and restaurantPreference != "":
+      restaurants = [rest.strip().lower() for rest in restaurantPreference.split(",")]
+      matching_rests = [rest for rest in rest_to_review_dict.keys() if rest.lower() in restaurants]
+      if len(matching_rests) == 0:
+        rest_to_query_svd = closest_rest_to_query(get_query_vec_in(query), len(rest_to_review_dict.keys())) 
+        #list of (rest, score) tuples with length of num docs
+        rest_to_query_cosine = [(num_to_res[idx], score) for score, idx in raw_results][:len(rest_to_review_dict.keys())]
+        results = get_avgs_from_list([rest_to_query_svd, rest_to_query_cosine], 1)
+      else:
+        rest_to_rest_cosine = [[(score, num_to_res[idx]) for score, idx in ranks(rest_to_review_dict[rest]) if score < 1] for rest in matching_rests]
+        #list of list of (score, doc_id) tuples; outer list has length of matching_rests, inner list has length of num docs
+        rest_to_rest_svd = [closest_rest_to_rest(get_rest_idx(rest), docs_compressed_normed, len(rest_to_rest_cosine[0])) for rest in matching_rests]
+        #list of list of (rest, score) tuples; outer list has length of matching_rests, inner list has length of num docs
+        rest_to_rest_avgs = get_avgs_from_list([get_avgs_from_list(rest_to_rest_svd, 1), get_avgs_from_list(rest_to_rest_cosine, 0)], 1)
+        #list of (rest, avg score) tuples
+        rest_to_query_svd = closest_rest_to_query(get_query_vec_in(query), len(rest_to_rest_avgs)) 
+        #list of (rest, score) tuples with length of num docs
+        rest_to_query_cosine = [(num_to_res[idx], score) for score, idx in raw_results][:len(rest_to_query_svd)]
+        results = get_avgs_from_list([get_avgs_from_list([rest_to_query_svd, rest_to_query_cosine], 1), rest_to_rest_avgs], 1)
+    else:
+      rest_to_query_svd = closest_rest_to_query(get_query_vec_in(query), len(rest_to_review_dict.keys())) 
+      #list of (rest, score) tuples with length of num docs
+      rest_to_query_cosine = [(num_to_res[idx], score) for score, idx in raw_results][:len(rest_to_review_dict.keys())]
+      results = get_avgs_from_list([rest_to_query_svd, rest_to_query_cosine], 1)
     
     recommendations = 0
 
-    for i in range(len(raw_results)):
-      if i == 1 and len(svd_results) != 0:
-        rest = svd_results[i][1]
-      rest = num_to_res[raw_results[i][1]]
+    if locPreferences != None and locPreferences != "":
+      locPrefList = locPreferences.split(",")
+      locPreference = locPrefList[0]
+      curr_loc_idx = 0
+
+
+    for i in range(len(results)):
+      if locPreferences != None and locPreferences != "":
+        if curr_loc_idx < len(locPrefList) - 1 and recommendations == 5//len(locPrefList):
+          locPreference = locPrefList[curr_loc_idx + 1]
+
+      '''if i == 1 and len(svd_results) != 0:
+        rest = svd_results[i][1]'''
+      rest = results[i][0]
       # incorporating location preferences
-      if locPreference1 != "No Preference":
-        if locPreference1 != data[rest]['location']: 
+      if locPreference != "No Preference":
+        if locPreference != data[rest]['location']: 
           continue
       #incorporate dietary restrictions
-      if pricePreference1 != "":
-        tokens = tokenizer(pricePreference1.lower())
-        if "vegan" in tokens:
-          if data[rest]['dietary']['vegan']:
+      if dietaryRstrctns != "" and dietaryRstrctns != None:
+        restrictions = [rstrctn.lower() for rstrctn in dietaryRstrctns.split(",")]
+        dtry_restrictions = [restriction for restriction in restrictions if restriction == "vegan" or restriction == "vegetarian"]
+        if "vegan" in restrictions:
+          if not data[rest]['dietary']['vegan']:
             continue
-        if "vegetarian" in tokens:
-          if data[rest]['dietary']['vegetarian']:
+        if "vegetarian" in restrictions:
+          if not data[rest]['dietary']['vegetarian']:
             continue
+      else:
+        dtry_restrictions = []
       ratings = data[rest]['star rating']
       rating_score = 0
       rating_total = 0
@@ -310,7 +449,7 @@ def json_search(locPreference1, pricePreference1, locPreference2, pricePreferenc
       for r in ratings:
         rating_score += ratings[r] * int(r)
         rating_total += ratings[r]
-      combined['results'].append({'name': rest, 'reviews': data[rest]['reviews'][:2], 'rating': round(rating_score/rating_total, 2)})
+      combined['results'].append({'name': rest, 'reviews': data[rest]['reviews'][:2], 'rating': round(rating_score/rating_total, 2), 'location': data[rest]['location'], 'restrictions': dtry_restrictions, 'dimensions': get_dimension_match(rest)})
       recommendations += 1
 
       if recommendations > 5:
@@ -324,14 +463,12 @@ def home():
 
 @app.route("/restaurants")
 def episodes_search():
-    locPreference1 = request.args.get("locPreference1")
-    pricePreference1 = request.args.get("pricePreference1")
-    foodPreference = request.args.get("foodPreference1") + " " + request.args.get("foodPreference2")
-    qualityPreference = request.args.get("qualityPreference1") + " " + request.args.get("qualityPreference2")
-    restaurantPreference = request.args.get("restaurantPreference1") + " " + request.args.get("restaurantPreference2")
-    locPreference2 = request.args.get("locPreference2")
-    pricePreference2 = request.args.get("pricePreference2")
-    return json_search(locPreference1, pricePreference1, locPreference2, pricePreference2, foodPreference, qualityPreference, restaurantPreference)
+    locPreferences = request.args.get("locPreferences")
+    dietaryRstrctns = request.args.get("dietaryRstrctns")
+    foodPreferences = request.args.get("foodPreferences")
+    qualityPreference = request.args.get("qualityPreference")
+    restaurantPreference = request.args.get("restaurantPreference")
+    return json_search(locPreferences, dietaryRstrctns, foodPreferences, qualityPreference, restaurantPreference)
 '''@app.route("/restaurants", methods=["POST"])
 def episodes_search():
         print("hello")

@@ -118,6 +118,14 @@ input[type="checkbox"] {
   left: 33%;
 }
 
+.image-citation {
+  color: white;
+  font-size: 13px;
+  position: absolute;
+  top: 28%;
+  left: 55%;
+}
+
 h2 {
   color: rgb(247, 227, 98);
   background-color: rgba(59, 58, 56, 0.8);
@@ -260,6 +268,11 @@ input[value="Submit"]:hover {
   font-size: 18px;
   font-weight: bold;
   font-family: "Montserrat", sans-serif;
+  margin-bottom: 10px;
+}
+
+.explanation {
+  color: #333;
 }
 
 .error {

@@ -1,10 +1,26 @@
 // do not delete except for Desmond
-function answerBoxTemplate(name, reviews, rating) {
-  return `<div class='d-class'>
+function answerBoxTemplate(name, reviews, rating, location, restrictions, dimensions) {
+  if (restrictions.toString() == "") {
+    const dimensionsString = dimensions.join(', '); 
+    return `<div class='d-class'>
             <h3 class='restaurant-name'>${name}</h3>
             <p class='restaurant-reviews'>${reviews.toString()}</p>
             <p class='restaurant-rating'>Overall Rating: ${rating}</p>
+            <p class='restaurant-rating'><span class="explanation">Location: </span>${location}</p>
+            <p class='restaurant-rating'><span class="explanation">Matches your query along the following dimensions: </span>${dimensionsString.replace(/, ,/g, "")}</p>
         </div>`;
+  } else {
+    const restrictionsString = restrictions.join(', ');
+    const dimensionsString = dimensions.join(', ');
+    return `<div class='d-class'>
+              <h3 class='restaurant-name'>${name}</h3>
+              <p class='restaurant-reviews'>${reviews.toString()}</p>
+              <p class='restaurant-rating'>Overall Rating: ${rating}</p>
+              <p class='restaurant-rating'><span class="explanation">Location: </span>${location}</p>
+              <p class='restaurant-rating'><span class="explanation">Accomodates the following dietary restrictions: </span>${restrictionsString}</p>
+              <p class='restaurant-rating'><span class="explanation">Matches your query along the following dimensions: </span>${dimensionsString.replace(/, ,/g, "")}</p>
+          </div>`;
+  }
 }
 
 function errorMessage() {
@@ -17,50 +33,78 @@ function errorMessage() {
 function filterText() {
   document.getElementById("answer-box").innerHTML = "";
 
-  const locPreference1 = document.querySelector(
-    'input[name="loc-preference1"]:checked'
-  )?.value;
-  const pricePreference1 = document.querySelector(
-    'input[name="price-preference1"]:checked'
-  )?.value;
-  const foodPreference1 = document.getElementById("pref-food1")?.value;
-  const qualityPreference1 = document.getElementById("pref-quality1")?.value;
-  const restaurantPreference1 =
-    document.getElementById("pref-restaurant1")?.value;
-  const locPreference2 = document.querySelector(
-    'input[name="loc-preference1"]:checked'
-  )?.value;
-  const pricePreference2 = document.querySelector(
-    'input[name="price-preference1"]:checked'
-  )?.value;
-  const foodPreference2 = document.getElementById("pref-food1")?.value;
-  const qualityPreference2 = document.getElementById("pref-quality1")?.value;
-  const restaurantPreference2 =
-    document.getElementById("pref-restaurant1")?.value;
+  let locPreferences = '';
+
+  for (let i = 1; i <= 3; i++) {
+    const inputName = `loc-preference${i}`;
+    const checkedInput = document.querySelector(`input[name="${inputName}"]:checked`);
+    if (checkedInput) {
+      if (i > 1) {
+        locPreferences += ',' + checkedInput.value;
+      } else {
+        locPreferences += checkedInput.value;
+      }
+    }
+  }
+  console.log(locPreferences);
+  
+
+  let dietaryRstrctns = '';
+
+  for (let i = 1; i <= 3; i++) {
+    const inputName = `dietary-restrictions${i}`;
+    const checkedInputs = Array.from(document.querySelectorAll(`input[name="${inputName}"]:checked`));
+    if (checkedInputs != null) {
+      let inputNum = 0;
+      checkedInputs.forEach((input) => {
+        inputNum += 1;
+        if (i > 1) {
+          dietaryRstrctns += ',' + input.value;
+        } else if (i == 1 && inputNum > 1) {
+          dietaryRstrctns += ',' + input.value;
+        } else {
+          dietaryRstrctns += input.value;
+        }
+      });
+    }
+  }
+  console.log(dietaryRstrctns);
+ 
+
+  let foodPreferences = '';
+  for (let i = 1; i <= 3; i++) {
+    const foodPref = document.getElementById(`pref-food${i}`)?.value;
+    if (foodPref) {
+      if (i > 1) {
+        foodPreferences += ' ' + foodPref;
+      } else {
+        foodPreferences += foodPref;
+      }
+    }
+  }
+  console.log(foodPreferences);
+
+
+  const qualityPreference = document.getElementById("pref-quality")?.value;
+  console.log(qualityPreference);
+  const restaurantPreference =
+    document.getElementById("pref-restaurant")?.value;
+  console.log(restaurantPreference);
+
 
   if (
-    (locPreference1 !== null &&
-      pricePreference1 !== null &&
-      foodPreference1 !== null &&
-      qualityPreference1 !== null) ||
-    (locPreference2 !== null &&
-      pricePreference2 !== null &&
-      foodPreference2 !== null &&
-      qualityPreference2 !== null)
+    (locPreferences != null &&
+      foodPreferences != null &&
+      qualityPreference != null)
   ) {
     fetch(
       "/restaurants?" +
         new URLSearchParams({
-          locPreference1,
-          pricePreference1,
-          foodPreference1,
-          qualityPreference1,
-          restaurantPreference1,
-          locPreference2,
-          pricePreference2,
-          foodPreference2,
-          qualityPreference2,
-          restaurantPreference2,
+          locPreferences,
+          dietaryRstrctns,
+          foodPreferences,
+          qualityPreference,
+          restaurantPreference,
         }).toString()
     )
       .then((response) => {
@@ -93,7 +137,10 @@ function filterText() {
           tempDiv.innerHTML = answerBoxTemplate(
             row.name,
             row.reviews,
-            row.rating
+            row.rating,
+            row.location,
+            row.restrictions,
+            row.dimensions
           );
 
           document.getElementById("answer-box").appendChild(tempDiv);
@@ -110,44 +157,26 @@ function filterText() {
 document.getElementById("submission-button").addEventListener("click", (e) => {
   e.preventDefault();
   filterText();
-  const inputElement1 = document.getElementById("pref-food1");
-  const inputElement2 = document.getElementById("pref-quality1");
+  const inputElement1 = document.getElementById("pref-restaurant");
+  const inputElement2 = document.getElementById("pref-quality");
 
   inputElement1.value = "";
   inputElement2.value = "";
+  for (let i = 1; i <= 3; i++) {
+    const foodPref = document.getElementById(`pref-food${i}`);
+    if (foodPref) {
+      foodPref.value = "";
+    }
+  }
 
-  const radioButtons = document.querySelectorAll(
-    'input[name="loc-preference1"]'
-  );
-  const radioButtonsPrice = document.querySelectorAll(
-    'input[name="price-preference1"]'
-  );
-
-  radioButtons.forEach((radioButton) => {
-    radioButton.checked = false;
-  });
-  radioButtonsPrice.forEach((radioButton) => {
-    radioButton.checked = false;
-  });
-  const inputElement22 = document.getElementById("pref-food2");
-  const inputElement222 = document.getElementById("pref-quality2");
-
-  inputElement22.value = "";
-  inputElement222.value = "";
-
-  const radioButtons2 = document.querySelectorAll(
-    'input[name="loc-preference2"]'
-  );
-  const radioButtonsPrice2 = document.querySelectorAll(
-    'input[name="price-preference2"]'
-  );
-
-  radioButtons2.forEach((radioButton) => {
-    radioButton.checked = false;
-  });
-  radioButtonsPrice2.forEach((radioButton) => {
-    radioButton.checked = false;
-  });
+  for (let i = 1; i <= 3; i++) {
+    let btns = Array.from(document.querySelectorAll(`input[name="loc-preference${i}"]`));
+      if (btns != null) {
+        btns.forEach((btn) => {
+          btn.checked = false;
+        });
+      }
+    }
 });
 function showAllergyInputs() {
   var allergySelect = document.getElementById("allergy");
@@ -196,7 +225,15 @@ function repeatElements(arr, n) {
   let newArr = [];
   arr.forEach((element) => {
     for (let i = 0; i < n; i++) {
-      newArr.push(element.cloneNode(true));
+      let newElm = element.cloneNode(true);
+      let inputs = Array.from(newElm.querySelectorAll('input'));
+      if (inputs != null) {
+        inputs.forEach((input) => {
+          input.id = input.id + (i+1);
+          input.name = input.name + (i+1);
+        });
+      }
+      newArr.push(newElm);
     }
   });
   return newArr;
